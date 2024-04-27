@@ -30,7 +30,7 @@ async def on_message(message):
     elif message.content.startswith('$coin toss'):
         await message.channel.send(coin_toss)
     elif message.content.startswith('$random emo'):
-        await message.channel.send(gen_emo)
+        await message.channel.send(gen_emo())
     else:
         await message.channel.send(message.content)
 
