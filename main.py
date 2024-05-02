@@ -1,5 +1,5 @@
 import discord
-from function import gen_pass , coin_toss , gen_emo
+from function import gen_pass , coin_toss , gen_emo 
 
 
 
