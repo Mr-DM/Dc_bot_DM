@@ -16,5 +16,8 @@ def coin_toss():
     else:
         return "False"  
         
+def gen_emo():
+    emo = ["\U0001f600", "\U0001f642", "\U0001F606", "\U0001F923","\U0001f642","\U0001F607"]
+    return random.choice(emo)
 
         
