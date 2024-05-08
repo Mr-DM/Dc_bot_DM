@@ -1,37 +1,49 @@
 import discord
+from discord.ext import commands
 from function import gen_pass , coin_toss , gen_emo 
 
-
-
-# Переменная intents - хранит привилегии бота
 intents = discord.Intents.default()
-# Включаем привелегию на чтение сообщений
 intents.message_content = True
-# Создаем бота в переменной client и передаем все привелегии
-client = discord.Client(intents=intents)
 
+bot = commands.Bot(command_prefix='$', intents=intents)
 
-
-
-@client.event
+@bot.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
+    print(f'We have logged in as {bot.user}')
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content.startswith('$hello'):
-        await message.channel.send("Hi!")
-    elif message.content.startswith('$bye'):
-        await message.channel.send("\\U0001f642")
-    elif message.content.startswith('$new pass'):
-        await message.channel.send(gen_pass(8))
-    elif message.content.startswith('$coin toss'):
-        await message.channel.send(coin_toss)
-    elif message.content.startswith('$random emo'):
-        await message.channel.send(gen_emo())
-    else:
-        await message.channel.send(message.content)
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Привет! Я бот {bot.user}!')
 
-client.run("Токен")
+@bot.command()
+async def coin_flip(ctx):
+    await ctx.send(coin_toss())
+
+@bot.command()
+async def new_pass(ctx):
+    await ctx.send(gen_pass(8))
+
+@bot.command()
+async def emoji(ctx):
+    await ctx.send(gen_emo())
+
+@bot.command()
+async def joined(ctx, member: discord.Member):
+    """Says when a member joined."""
+    await ctx.send(f'{member.name} joined {discord.utils.format_dt(member.joined_at)}')
+
+@bot.command()
+async def repeat(ctx, times: int, content='repeating...'):
+    """Repeats a message multiple times."""
+    for i in range(times):
+        await ctx.send(content)
+
+@bot.command()
+async def my_code(ctx):
+    await ctx.send('https://github.com/Mr-DM/Dc_bot_DM')
+
+@bot.command()
+async def helps(ctx):  
+    await ctx.send(f'В боте {bot.user} есть функцы как (hello, coin_flip, new_pass, emoji, my_code, repeat, helps) не забудь в начале $ ')
+
+bot.run("Токен")
