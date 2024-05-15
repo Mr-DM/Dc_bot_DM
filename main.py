@@ -59,6 +59,15 @@ async def mem(ctx):
    # Можем передавать файл как параметр!
     await ctx.send(file=picture)
 
+@bot.command()
+async def animals(ctx):
+    # А вот так можно подставить имя файла из переменной!
+    animals_img_name = random.choice(os.listdir('animal'))
+    with open(f'animal/{animals_img_name}', 'rb') as f:   
+            picture = discord.File(f)
+   # Можем передавать файл как параметр!
+    await ctx.send(file=picture)
+
 
 def get_duck_image_url():    
     url = 'https://random-d.uk/api/random'
